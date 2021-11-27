@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const {FieldValue} = require('firebase-admin/firestore');
+const { FieldValue } = require('firebase-admin/firestore');
+const { reset } = require("nodemon");
 
 const db = require("../database")
 router.post('/additem', (req, res) => {
@@ -15,12 +16,43 @@ router.post('/additem', (req, res) => {
   })();
 });
 
+// NOT Complete
+router.get('/allitems', (req, res) => {
+  
+    (async () => {
+      try {
+        const doc = await db.collection('todolist').doc('/' + req.user.uid + '/').get();
+        // const doc = await listref
+        if (! doc.exists) {
+          console.log('no such documents')
+          res.status(404).send({});
 
+        }
+        else {
+          console.log(doc.data())
+          res.status(200).send(doc.data());
+        }
+
+      }
+      catch (e) {
+        console.log(e)
+        res.status(500).send(e)
+
+      }
+
+    })();
+
+
+
+  //res.status(200).send();
+})
+
+// NOT Complete
 router.post('/deleteitem', (req, res) => {
   (async () => {
-    listid = req.body.listid
+    const _id = req.body.listid
     try {
-      await db.collection('todolist').doc('/' + req.user.uid + '/').update({list2:FieldValue.delete()});
+      await db.collection('todolist').doc('/' + req.user.uid + '/').update({ _id: FieldValue.delete() });
 
       return res.status(200).send();
     } catch (error) {

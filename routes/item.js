@@ -4,6 +4,8 @@ const { FieldValue } = require('firebase-admin/firestore');
 const { reset } = require("nodemon");
 
 const db = require("../database")
+
+// The route itme/additem works for both adding new item to the list as well as removing an item from the list
 router.post('/additem', (req, res) => {
   (async () => {
     try {

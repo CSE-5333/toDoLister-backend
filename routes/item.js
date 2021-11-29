@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { FieldValue } = require('firebase-admin/firestore');
-const { reset } = require("nodemon");
+
 
 const db = require("../database")
 
@@ -18,7 +18,7 @@ router.post('/additem', (req, res) => {
   })();
 });
 
-// NOT Complete
+
 router.get('/allitems', (req, res) => {
   
     (async () => {
@@ -43,10 +43,6 @@ router.get('/allitems', (req, res) => {
       }
 
     })();
-
-
-
-  //res.status(200).send();
 })
 
 // NOT Complete
@@ -54,7 +50,7 @@ router.post('/deleteitem', (req, res) => {
   (async () => {
     const _id = req.body.listid
     try {
-      await db.collection('todolist').doc('/' + req.user.uid + '/').update({ _id: FieldValue.delete() });
+      await db.collection('todolist').doc('/' + req.user.uid + '/').update({ [_id]: FieldValue.delete() });
 
       return res.status(200).send();
     } catch (error) {

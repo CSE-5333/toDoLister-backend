@@ -9,8 +9,8 @@ const db = require("../database")
 router.post('/additem', (req, res) => {
 
   key = Object.keys(req.body)
-  console.log(key);
-  console.log(key[0]);
+  //console.log(key);
+  //console.log(key[0]);
   if(key[0] == 'NaN'){
      return res.status(200).send();
   }
@@ -18,7 +18,7 @@ router.post('/additem', (req, res) => {
   // console.log(value)
   (async () => {
     try {
-      console.log(req.body)
+      //console.log(req.body)
       itemref = await db.collection('todolist').doc('/' + req.user.uid + '/').set(req.body, { merge: true });
       return res.status(200).send();
     } catch (error) {
